@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>St. Mary's Greenwing Youth Event Registration</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 2rem;
+      background-color: #f9f9f9;
+    }
+    .form-container {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    h1, p {
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    input, select {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.25rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .child-section {
+      border: 1px solid #ddd;
+      padding: 1rem;
+      margin-top: 1rem;
+      border-radius: 6px;
+      background-color: #f1f1f1;
+    }
+    .child-section h3 {
+      margin-top: 0;
+    }
+    button {
+      margin-top: 2rem;
+      width: 100%;
+      padding: 1rem;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h1>St. Mary's Greenwing Youth Event</h1>
+    <p>June 7, 2025 | 8:00 AM - 2:00 PM<br>Sanner's Lake Sportsmen's Club, Lexington Park, MD<br>$20 per child</p>
+
+    <form action="https://formspree.io/f/your-form-id" method="POST">
+      <label for="guardianName">Parent/Guardian Full Name</label>
+      <input type="text" id="guardianName" name="guardianName" required />
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" required />
+
+      <label for="numChildren">Number of Children Registering</label>
+      <select id="numChildren" name="numChildren" required>
+        <option value="">-- Select --</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+
+      <div id="childrenFields"></div>
+
+      <label for="emergencyContact">Emergency Contact Name & Phone</label>
+      <input type="text" id="emergencyContact" name="emergencyContact" required />
+
+      <label for="shirtSize">T-Shirt Size</label>
+      <select id="shirtSize" name="shirtSize">
+        <option value="">-- Select a size --</option>
+        <option value="Youth S">Youth S</option>
+        <option value="Youth M">Youth M</option>
+        <option value="Youth L">Youth L</option>
+        <option value="Adult S">Adult S</option>
+        <option value="Adult M">Adult M</option>
+        <option value="Adult L">Adult L</option>
+        <option value="Adult XL">Adult XL</option>
+      </select>
+
+      <label>
+        <input type="checkbox" name="waiver" required />
+        I agree to the liability waiver.
+      </label>
+
+      <label>
+        <input type="checkbox" name="paymentConfirmed" required />
+        I confirm I have paid the $20 registration fee.
+      </label>
+
+      <button type="submit">Submit Registration</button>
+    </form>
+  </div>
+
+  <script>
+    const numChildrenSelect = document.getElementById("numChildren");
+    const childrenFieldsDiv = document.getElementById("childrenFields");
+
+    numChildrenSelect.addEventListener("change", () => {
+      const count = parseInt(numChildrenSelect.value);
+      childrenFieldsDiv.innerHTML = "";
+
+      if (!isNaN(count)) {
+        for (let i = 1; i <= count; i++) {
+          const section = document.createElement("div");
+          section.classList.add("child-section");
+          section.innerHTML = `
+            <h3>Child ${i}</h3>
+            <label for="childFirstName${i}">First Name</label>
+            <input type="text" id="childFirstName${i}" name="childFirstName${i}" required />
+            
+            <label for="childLastName${i}">Last Name</label>
+            <input type="text" id="childLastName${i}" name="childLastName${i}" required />
+            
+            <label for="childDOB${i}">Date of Birth</label>
+            <input type="date" id="childDOB${i}" name="childDOB${i}" required />
+            
+            <label for="childAge${i}">Age</label>
+            <input type="number" id="childAge${i}" name="childAge${i}" min="1" max="17" required />
+          `;
+          childrenFieldsDiv.appendChild(section);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
